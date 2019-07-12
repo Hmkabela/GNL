@@ -21,7 +21,7 @@ static	int		ft_prep_n_cat(char **line, const int fd)
 
 	ret = 0;
 	if (*line == NULL)
-		(*line) = ft_strnew(1);
+		*line = ft_strnew(1);
 	buff = ft_strnew(BUFF_SIZE + 1);
 	if ((read(fd, buff, 0) < 0))
 		return (-1);
@@ -47,7 +47,7 @@ int				get_next_line(const int fd, char **line)
 
 	temp = 0;
 	retval = 1;
-	if (read(fd, temp, 0) < 0 || fd < 0 || !line || (BUFF_SIZE < 1))
+	if (read(fd, temp, 0) < 0 || fd < 0)
 		return (-1);
 	*line = 0;
 	if (store[fd])
@@ -62,6 +62,7 @@ int				get_next_line(const int fd, char **line)
 		store[fd] = ft_strdup(store[fd] + 1);
 		ft_strclr(ft_strchr(*line, '\n'));
 		temp = ft_strdup(*line);
+		ft_strdel(&temp);
 	}
 	return ((retval > 0) ? 1 : retval);
 }
